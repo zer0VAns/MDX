@@ -194,3 +194,4 @@ C:\Users\jamaica\Desktop\mdx-ecommerce\mdxEcommerce\mdxEcommerce\obj\Debug\net10
 C:\Users\jamaica\Desktop\mdx-ecommerce\mdxEcommerce\mdxEcommerce\obj\Debug\net10.0\compressed\oylvrx9jam-{0}-tarekh8yml-tarekh8yml.gz
 C:\Users\jamaica\Desktop\mdx-ecommerce\mdxEcommerce\mdxEcommerce\obj\Debug\net10.0\compressed\0r1j53j9lw-{0}-b92s3hle06-b92s3hle06.gz
 C:\Users\jamaica\Desktop\mdx-ecommerce\mdxEcommerce\mdxEcommerce\obj\Debug\net10.0\compressed\3og5fvoi1c-{0}-4kxx9mskct-4kxx9mskct.gz
+C:\Users\jamaica\Desktop\mdx-ecommerce\mdxEcommerce\mdxEcommerce\obj\Debug\net10.0\mdxEcommerce.sourcelink.json

@@ -1,0 +1,230 @@
+@page "/"
+@rendermode InteractiveWebAssembly
+@using mdxEcommerce.Client.Models
+@inject HttpClient Http
+@inject IJSRuntime JS
+
+<PageTitle>Home</PageTitle>
+
+<!-- SECTION 1 — Hero / About -->
+<section class="section-hero">
+    <div class="hero-bg-overlay"></div>
+    <div class="hero-content">
+        <div class="hero-eyebrow">Est. 2024</div>
+        <h1 class="hero-brand">MDX</h1>
+        <div class="hero-divider"></div>
+        <p class="hero-tagline">
+            Premium, minimalist products for people who value quality,
+            craftsmanship, and timeless aesthetics.
+        </p>
+        <a href="/catalog" class="btn-outline-hero">Explore Collection</a>
+    </div>
+    <div class="hero-scroll-hint">
+        <span>Scroll</span>
+        <div class="scroll-line"></div>
+    </div>
+</section>
+
+<!-- SECTION 2 — Featured Product Slider -->
+<section class="section-featured">
+    <div class="featured-header">
+        <p class="section-eyebrow">Selected Works</p>
+        <h2 class="featured-title">Featured Products</h2>
+    </div>
+
+    <div class="slider-wrapper">
+        @if (products == null)
+        {
+            <div class="slider-loading">
+                <div class="loading-bar"></div>
+            </div>
+        }
+        else if (!products.Any())
+        {
+            <p class="no-products">No featured products available.</p>
+        }
+        else
+        {
+            List<ProductDto>? featured = products.Take(count: 3).ToList();
+
+            <div class="slider-track">
+                @for (int i = 0; i < featured.Count; i++)
+                {
+                    ProductDto? item = featured[i];
+                    int idx = i;
+                    <div class="slide @(idx == activeSlide ? "slide--active" : idx == prevSlide ? "slide--prev" : "slide--hidden")">
+                        <div class="slide-image-wrap">
+                            <img src="@item.ImageUrl" alt="@item.Name" class="slide-image" />
+                            <div class="slide-image-overlay"></div>
+                        </div>
+                        <div class="slide-info">
+                            <span class="slide-counter">0@(idx + 1) / 0@(featured.Count)</span>
+                            <h3 class="slide-name">@item.Name</h3>
+                            <p class="slide-price">@item.Price.ToString(format: "C")</p>
+                            <button class="btn-primary" @onclick="() => AddToCart(item)">Add to Cart</button>
+                        </div>
+                    </div>
+                }
+            </div>
+
+            <!-- Slider controls -->
+            <div class="slider-controls">
+                <button class="slider-btn slider-btn--prev" @onclick="PrevSlide" aria-label="Previous">
+                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                        <path d="M12 4L6 10L12 16" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                    </svg>
+                </button>
+                <div class="slider-dots">
+                    @for (int i = 0; i < featured.Count; i++)
+                    {
+                        var idx = i;
+                        <button class="dot @(idx == activeSlide ? "dot--active" : "")"
+                                @onclick="() => GoToSlide(idx)"
+                                aria-label="Go to slide @(i + 1)"></button>
+                    }
+                </div>
+                <button class="slider-btn slider-btn--next" @onclick="NextSlide" aria-label="Next">
+                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                        <path d="M8 4L14 10L8 16" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                    </svg>
+                </button>
+            </div>
+
+            <!-- Progress bar -->
+            <div class="slider-progress">
+                <div class="slider-progress-bar" style="animation-duration: @(slideDuration)ms; @(isPlaying ? "" : "animation-play-state: paused;")"></div>
+            </div>
+        }
+    </div>
+</section>
+
+<!-- SECTION 3 — Values -->
+<section class="section-values">
+    <!-- Capas de fondo: crossfade al hacer hover en cada card -->
+    <div class="values-bg values-bg--default @(hoveredValue == null ? "values-bg--visible" : "")"></div>
+    <div class="values-bg values-bg--quality @(hoveredValue == "quality" ? "values-bg--visible" : "")"></div>
+    <div class="values-bg values-bg--design @(hoveredValue == "design" ? "values-bg--visible" : "")"></div>
+    <div class="values-bg values-bg--experience @(hoveredValue == "experience" ? "values-bg--visible" : "")"></div>
+
+    <div class="values-container">
+        <p class="section-eyebrow light">Philosophy</p>
+        <h2 class="values-title">Our Values</h2>
+        <div class="values-grid">
+            <div class="value-card"
+                 @onmouseenter='() => hoveredValue = "quality"'
+                 @onmouseleave="() => hoveredValue = null">
+                <div class="value-number">01</div>
+                <h3 class="value-name">Quality</h3>
+                <p class="value-desc">We craft every product with precision and durability in mind.</p>
+                <div class="value-line"></div>
+            </div>
+            <div class="value-card"
+                 @onmouseenter='() => hoveredValue = "design"'
+                 @onmouseleave="() => hoveredValue = null">
+                <div class="value-number">02</div>
+                <h3 class="value-name">Design</h3>
+                <p class="value-desc">Minimalist, timeless, and elegant aesthetics that endure.</p>
+                <div class="value-line"></div>
+            </div>
+            <div class="value-card"
+                 @onmouseenter='() => hoveredValue = "experience"'
+                 @onmouseleave="() => hoveredValue = null">
+                <div class="value-number">03</div>
+                <h3 class="value-name">Experience</h3>
+                <p class="value-desc">A seamless customer journey from discovery to delivery.</p>
+                <div class="value-line"></div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- SECTION 4 — CTA -->
+<section class="section-cta">
+    <div class="cta-inner">
+        <p class="section-eyebrow">Ready?</p>
+        <h2 class="cta-title">Explore the Full Collection</h2>
+        <a href="/catalog" class="btn-ghost">Visit Catalog &rarr;</a>
+    </div>
+</section>
+
+@code {
+    private List<ProductDto>? products;
+    private string? hoveredValue;
+    private int activeSlide = 0;
+    private int prevSlide = -1;
+    private int slideDuration = 4000;
+    private bool isPlaying = true;
+    private System.Threading.Timer? autoTimer;
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            products = await Http.GetFromJsonAsync<List<ProductDto>>("api/products");
+            StartAutoSlide();
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error fetching products: {ex.Message}");
+        }
+    }
+
+    private void StartAutoSlide()
+    {
+        autoTimer?.Dispose();
+        autoTimer = new System.Threading.Timer(_ =>
+        {
+            InvokeAsync(() =>
+            {
+                AdvanceSlide();
+                StateHasChanged();
+            });
+        }, null, slideDuration, Timeout.Infinite); // Timeout.Infinite: no repite, se reinicia manualmente
+    }
+
+    // Solo avanza el slide — usado por el timer
+    private void AdvanceSlide()
+    {
+        if (products == null) return;
+        var count = Math.Min(products.Count, 3);
+        prevSlide = activeSlide;
+        activeSlide = (activeSlide + 1) % count;
+        StartAutoSlide(); // reinicia el timer para el próximo ciclo
+    }
+
+    // Usados por botones — cambian slide y reinician timer sin recursión
+    private void NextSlide()
+    {
+        if (products == null) return;
+        var count = Math.Min(products.Count, 3);
+        prevSlide = activeSlide;
+        activeSlide = (activeSlide + 1) % count;
+        StartAutoSlide();
+    }
+
+    private void PrevSlide()
+    {
+        if (products == null) return;
+        var count = Math.Min(products.Count, 3);
+        prevSlide = activeSlide;
+        activeSlide = (activeSlide - 1 + count) % count;
+        StartAutoSlide();
+    }
+
+    private void GoToSlide(int idx)
+    {
+        prevSlide = activeSlide;
+        activeSlide = idx;
+        StartAutoSlide();
+    }
+
+    private void AddToCart(ProductDto product)
+    {
+        Console.WriteLine($"Added to cart: {product.Name}");
+    }
+
+    public void Dispose()
+    {
+        autoTimer?.Dispose();
+    }
+}

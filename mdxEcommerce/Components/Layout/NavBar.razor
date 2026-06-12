@@ -1,0 +1,127 @@
+@using Microsoft.AspNetCore.Components.Routing
+@inject NavigationManager Nav
+@inject Microsoft.JSInterop.IJSRuntime JS
+@implements IDisposable
+@rendermode InteractiveWebAssembly
+
+<header class="navbar @(scrolled ? "navbar--scrolled" : "") @(menuOpen ? "navbar--open" : "")">
+
+    <div class="navbar-inner">
+
+        <!-- Brand -->
+        <a href="/" class="navbar-brand">
+            MDX
+        </a>
+
+        <!-- Links (desktop) -->
+        <nav class="navbar-links">
+            <NavLink href="/" Match="NavLinkMatch.All">
+                Home
+            </NavLink>
+
+            <NavLink href="/catalog">
+                Catalog
+            </NavLink>
+
+            <NavLink href="/contact">
+                Contact
+            </NavLink>
+        </nav>
+
+        <!-- Actions -->
+        <div class="navbar-actions">
+
+            <!-- Account -->
+            <a href="/"
+               class="icon-link"
+               title="Account">
+
+                <svg width="18"
+                     height="18"
+                     viewBox="0 0 24 24"
+                     fill="none"
+                     stroke="currentColor"
+                     stroke-width="1.4"
+                     stroke-linecap="round"
+                     stroke-linejoin="round">
+
+                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+                    <circle cx="12" cy="7" r="4" />
+
+                </svg>
+
+            </a>
+
+            <!-- Cart -->
+            <a href="/"
+               class="icon-link cart-link"
+               title="Cart">
+
+                <svg width="18"
+                     height="18"
+                     viewBox="0 0 24 24"
+                     fill="none"
+                     stroke="currentColor"
+                     stroke-width="1.4"
+                     stroke-linecap="round"
+                     stroke-linejoin="round">
+
+                    <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z" />
+                    <line x1="3" y1="6" x2="21" y2="6" />
+                    <path d="M16 10a4 4 0 0 1-8 0" />
+
+                </svg>
+
+                <span class="cart-badge">0</span>
+
+            </a>
+
+        </div>
+
+    </div>
+
+
+
+</header>
+
+@code {
+
+    private bool scrolled = false;
+    private bool menuOpen = false;
+
+    protected override void OnInitialized()
+    {
+        Nav.LocationChanged += OnLocationChanged;
+    }
+
+    private void OnLocationChanged(object? sender, LocationChangedEventArgs e)
+    {
+        menuOpen = false;
+        InvokeAsync(StateHasChanged);
+    }
+
+    private void ToggleMenu()
+    {
+        menuOpen = !menuOpen;
+
+        Console.WriteLine($"Menu toggled → menuOpen = {menuOpen}");
+
+        _ = JS.InvokeVoidAsync(
+            "console.log",
+            $"menuOpen: {menuOpen}"
+        );
+
+        StateHasChanged();
+    }
+
+    private void CloseMenu()
+    {
+        menuOpen = false;
+        StateHasChanged();
+    }
+
+    public void Dispose()
+    {
+        Nav.LocationChanged -= OnLocationChanged;
+    }
+}

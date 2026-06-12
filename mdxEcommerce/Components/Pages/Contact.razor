@@ -1,0 +1,156 @@
+@page "/contact"
+<PageTitle>Contact — MDX</PageTitle>
+
+<!-- Hero -->
+<section class="contact-hero">
+    <div class="contact-hero-content">
+        <p class="contact-eyebrow">Get in Touch</p>
+        <h1 class="contact-hero-title">Contacto</h1>
+        <div class="contact-hero-line"></div>
+    </div>
+</section>
+
+<!-- Main -->
+<section class="contact-section">
+
+    <!-- Intro -->
+    <div class="contact-intro">
+        <p class="contact-subtitle">
+            Estamos disponibles para responder tus consultas, pedidos especiales
+            y cualquier cosa que necesites. No dudes en escribirnos.
+        </p>
+    </div>
+
+    <!-- Cards -->
+    <div class="contact-grid">
+
+        <!-- Email -->
+        <div class="contact-card">
+            <div class="contact-card-icon">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="2" y="4" width="20" height="16" rx="2"/>
+                    <path d="M2 7l10 7 10-7"/>
+                </svg>
+            </div>
+            <div class="contact-card-number">01</div>
+            <h2 class="contact-card-title">Email</h2>
+            <p class="contact-card-desc">Respondemos dentro de las 24 horas hábiles.</p>
+            <a href="mailto:nsilvahollger@gmail.com" class="contact-card-link">
+                nsilvahollger@gmail.com
+                <span class="link-arrow">→</span>
+            </a>
+            <div class="contact-card-cta">
+                <a href="mailto:nsilvahollger@gmail.com" class="btn-contact">Enviar Email</a>
+            </div>
+        </div>
+
+        <!-- Teléfono -->
+        <div class="contact-card">
+            <div class="contact-card-icon">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M22 16.92v3a2 2 0 01-2.18 2A19.79 19.79 0 013.09 5.18 2 2 0 015.07 3h3a2 2 0 012 1.72c.13 1 .37 1.97.72 2.9a2 2 0 01-.45 2.11L9.09 11a16 16 0 006.91 6.91l1.27-1.27a2 2 0 012.11-.45c.93.35 1.9.59 2.9.72A2 2 0 0122 16.92z"/>
+                </svg>
+            </div>
+            <div class="contact-card-number">02</div>
+            <h2 class="contact-card-title">Teléfono</h2>
+            <p class="contact-card-desc">Lunes a viernes, 9:00 a 18:00 hs.</p>
+            <a href="tel:+15551234567" class="contact-card-link">
+                +1 (555) 123‑4567
+                <span class="link-arrow">→</span>
+            </a>
+        </div>
+
+        <!-- Ubicación -->
+        <div class="contact-card">
+            <div class="contact-card-icon">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/>
+                    <circle cx="12" cy="9" r="2.5"/>
+                </svg>
+            </div>
+            <div class="contact-card-number">03</div>
+            <h2 class="contact-card-title">Ubicación</h2>
+            <p class="contact-card-desc">Visitanos en nuestra oficina principal.</p>
+            <span class="contact-card-link no-arrow">San Juan, Argentina</span>
+        </div>
+
+    </div>
+
+    <!-- Divider -->
+    <div class="contact-divider"></div>
+
+    <!-- Form -->
+    <div class="contact-form-wrap">
+        <p class="contact-form-eyebrow">Escribinos</p>
+        <h2 class="contact-form-title">Mandanos un mensaje</h2>
+
+        <div class="contact-form">
+            <div class="form-row">
+                <div class="form-field">
+                    <label class="form-label">Nombre</label>
+                    <input type="text" class="form-input" placeholder="Tu nombre" @bind="formName" />
+                </div>
+                <div class="form-field">
+                    <label class="form-label">Email</label>
+                    <input type="email" class="form-input" placeholder="tu@email.com" @bind="formEmail" />
+                </div>
+            </div>
+            <div class="form-field">
+                <label class="form-label">Asunto</label>
+                <input type="text" class="form-input" placeholder="¿En qué te podemos ayudar?" @bind="formSubject" />
+            </div>
+            <div class="form-field">
+                <label class="form-label">Mensaje</label>
+                <textarea class="form-textarea" rows="5" placeholder="Escribí tu mensaje aquí..." @bind="formMessage"></textarea>
+            </div>
+            <div class="form-footer">
+                @if (formSent)
+                {
+                    <div class="form-success">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                            <path d="M20 6L9 17l-5-5"/>
+                        </svg>
+                        Mensaje enviado. Te respondemos pronto.
+                    </div>
+                }
+                else
+                {
+                    <button class="btn-submit" @onclick="HandleSubmit" disabled="@isSubmitting">
+                        @if (isSubmitting)
+                        {
+                            <span class="btn-submit-dots">
+                                <span></span><span></span><span></span>
+                            </span>
+                        }
+                        else
+                        {
+                            <span>Enviar Mensaje →</span>
+                        }
+                    </button>
+                }
+            </div>
+        </div>
+    </div>
+
+</section>
+
+@code {
+    private string formName    = "";
+    private string formEmail   = "";
+    private string formSubject = "";
+    private string formMessage = "";
+    private bool formSent      = false;
+    private bool isSubmitting  = false;
+
+    private async Task HandleSubmit()
+    {
+        if (string.IsNullOrWhiteSpace(formName) ||
+            string.IsNullOrWhiteSpace(formEmail) ||
+            string.IsNullOrWhiteSpace(formMessage)) return;
+
+        isSubmitting = true;
+        await Task.Delay(1200); // simula envío
+        isSubmitting = false;
+        formSent = true;
+    }
+}

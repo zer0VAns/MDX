@@ -1,0 +1,125 @@
+@page "/catalog"
+@rendermode InteractiveWebAssembly
+@using mdxEcommerce.Client.Models
+@inject HttpClient Http
+
+<PageTitle>Catalog — MDX</PageTitle>
+
+<!-- Hero -->
+<section class="catalog-hero">
+    <div class="catalog-hero-content">
+        <p class="catalog-eyebrow">Full Collection</p>
+        <h1 class="catalog-hero-title">Our Catalog</h1>
+        <div class="catalog-hero-line"></div>
+        <p class="catalog-hero-sub">Premium black &amp; white collection</p>
+    </div>
+</section>
+
+<!-- Catalog Body -->
+<section class="catalog-section">
+
+    <!-- Toolbar: count + sort -->
+    <div class="catalog-toolbar">
+        <span class="catalog-count">
+            @if (products != null)
+            {
+                <span>@(filteredProducts?.Count ?? 0) items</span>
+            }
+        </span>
+        <div class="catalog-sort">
+            <label class="sort-label">Sort</label>
+            <select class="sort-select" @onchange="OnSortChange">
+                <option value="default">Default</option>
+                <option value="price-asc">Price: Low → High</option>
+                <option value="price-desc">Price: High → Low</option>
+                <option value="name">Name A–Z</option>
+            </select>
+        </div>
+    </div>
+
+    <!-- Grid -->
+    @if (products == null)
+    {
+        <div class="catalog-loading">
+            <div class="catalog-loading-track">
+                <div class="catalog-loading-bar"></div>
+            </div>
+            <p>Loading collection…</p>
+        </div>
+    }
+    else if (!products.Any())
+    {
+        <div class="catalog-empty">
+            <p>No products available right now.</p>
+            <p class="catalog-empty-sub">Check back soon.</p>
+        </div>
+    }
+    else
+    {
+        <div class="catalog-grid">
+            @{ int idx = 0; }
+            @foreach (ProductDto item in filteredProducts ?? new List<ProductDto>())
+            {
+                int delay = (idx % 6) * 80;
+                idx++;
+                <div class="catalog-card" style="animation-delay: @(delay)ms">
+                    <div class="catalog-card-image-wrap">
+                        <img src="@item.ImageUrl" alt="@item.Name" class="catalog-image" />
+                        <div class="catalog-card-reveal">
+                            <button @onclick="() => AddToCart(item)" class="catalog-btn-reveal">
+                                Add to Cart
+                            </button>
+                        </div>
+                    </div>
+                    <div class="catalog-card-body">
+                        <h3 class="catalog-name">@item.Name</h3>
+                        <p class="catalog-price">@item.Price.ToString("C")</p>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+</section>
+
+@code {
+    private List<ProductDto>? products;
+    private List<ProductDto>? filteredProducts;
+    private string sortMode = "default";
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            products = await Http.GetFromJsonAsync<List<ProductDto>>(requestUri: "api/products");
+            ApplySort();
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(value: $"Error fetching data: {ex.Message}");
+        }
+    }
+
+    private void OnSortChange(ChangeEventArgs e)
+    {
+        sortMode = e.Value?.ToString() ?? "default";
+        ApplySort();
+    }
+
+    private void ApplySort()
+    {
+        if (products == null) return;
+
+        filteredProducts = sortMode switch
+        {
+            "price-asc"  => products.OrderBy(p => p.Price).ToList(),
+            "price-desc" => products.OrderByDescending(p => p.Price).ToList(),
+            "name"       => products.OrderBy(p => p.Name).ToList(),
+            _            => products.ToList(),
+        };
+    }
+
+    private void AddToCart(ProductDto product)
+    {
+        Console.WriteLine($"Added to cart: {product.Name}");
+    }
+}

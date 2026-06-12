@@ -1,0 +1,164 @@
+/* ═══════════════════════════════════════════════════════════
+   MAIN LAYOUT + FOOTER — MDX
+   NOTE: .app-shell y .main-content ya están en app.css global.
+         Este archivo solo define el footer.
+   ═══════════════════════════════════════════════════════════ */
+
+/* ─── Footer ─────────────────────────────────────────────── */
+
+.site-footer[b-bvdpainzwe] {
+    background: var(--black, #000);
+    border-top: 1px solid var(--border, #2a2a2a);
+    padding: 4.5rem 2rem 2rem;
+}
+
+.footer-inner[b-bvdpainzwe] {
+    max-width: 1280px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 3.5rem;
+}
+
+/* Top row */
+.footer-top[b-bvdpainzwe] {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 3rem;
+}
+
+/* Brand column */
+.footer-brand-col[b-bvdpainzwe] {
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+    flex-shrink: 0;
+}
+
+.footer-brand[b-bvdpainzwe] {
+    font-family: var(--font-display, 'Cormorant Garamond', serif);
+    font-size: 1.8rem;
+    font-weight: 300;
+    letter-spacing: 0.28em;
+    color: var(--white, #fff);
+    text-decoration: none;
+    transition: opacity 0.2s ease;
+}
+
+.footer-brand:hover[b-bvdpainzwe] {
+    opacity: 0.55;
+}
+
+.footer-tagline[b-bvdpainzwe] {
+    font-size: 0.82rem;
+    color: var(--muted, #777);
+    line-height: 1.65;
+    max-width: 200px;
+}
+
+/* Nav columns */
+.footer-nav-cols[b-bvdpainzwe] {
+    display: flex;
+    gap: 4rem;
+}
+
+.footer-col[b-bvdpainzwe] {
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+}
+
+.footer-col-heading[b-bvdpainzwe] {
+    font-size: 0.6rem;
+    font-weight: 500;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.22);
+    margin-bottom: 0.2rem;
+}
+
+.footer-col a[b-bvdpainzwe] {
+    font-size: 0.82rem;
+    color: var(--muted, #777);
+    text-decoration: none;
+    letter-spacing: 0.03em;
+    transition: color 0.2s ease;
+    width: fit-content;
+    position: relative;
+}
+
+.footer-col a[b-bvdpainzwe]::after {
+    content: '';
+    position: absolute;
+    bottom: -1px;
+    left: 0;
+    width: 0;
+    height: 1px;
+    background: var(--muted, #777);
+    transition: width 0.25s ease;
+}
+
+.footer-col a:hover[b-bvdpainzwe] {
+    color: var(--white, #fff);
+}
+
+.footer-col a:hover[b-bvdpainzwe]::after {
+    width: 100%;
+}
+
+/* Bottom row */
+.footer-bottom[b-bvdpainzwe] {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 2rem;
+    border-top: 1px solid var(--border, #2a2a2a);
+}
+
+.footer-copy[b-bvdpainzwe] {
+    font-size: 0.72rem;
+    color: rgba(255,255,255,0.2);
+    letter-spacing: 0.06em;
+}
+
+.footer-made[b-bvdpainzwe] {
+    font-size: 0.7rem;
+    color: rgba(255,255,255,0.15);
+    letter-spacing: 0.08em;
+    font-style: italic;
+}
+
+/* ─── Responsive ─────────────────────────────────────────── */
+
+@media (max-width: 768px) {
+    .site-footer[b-bvdpainzwe] {
+        padding: 3.5rem 1.25rem 2rem;
+    }
+
+    .footer-top[b-bvdpainzwe] {
+        flex-direction: column;
+        gap: 2.5rem;
+    }
+
+    .footer-nav-cols[b-bvdpainzwe] {
+        gap: 2.5rem;
+        flex-wrap: wrap;
+    }
+
+    .footer-bottom[b-bvdpainzwe] {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.5rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .footer-nav-cols[b-bvdpainzwe] {
+        gap: 2rem;
+    }
+
+    .footer-brand[b-bvdpainzwe] {
+        font-size: 1.5rem;
+    }
+}

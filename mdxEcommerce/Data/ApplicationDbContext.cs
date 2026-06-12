@@ -9,7 +9,5 @@ public class ApplicationDbContext : DbContext
         : base(options)
     {
     }
-
-    // This creates your SQL table named "Products" automatically
     public DbSet<Products> Products { get; set; }
 }

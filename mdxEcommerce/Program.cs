@@ -23,7 +23,18 @@ builder.Services.AddControllers();
 builder.Services.AddRazorComponents()
     .AddInteractiveWebAssemblyComponents();
 
-builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri("https://localhost:5230/") });
+// Configuración dinámica del HttpClient para el servidor
+if (builder.Environment.IsDevelopment())
+{
+    // En tu computadora usa el puerto local actual
+    builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri("https://localhost:5230/") });
+}
+else
+{
+    // En Render toma automáticamente la URL pública que te asigne la plataforma
+    var renderUrl = Environment.GetEnvironmentVariable("RENDER_EXTERNAL_URL") ?? "http://localhost:10000";
+    builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(renderUrl) });
+}
 
 var app = builder.Build();
 
@@ -50,5 +61,50 @@ app.MapRazorComponents<App>()
 app.MapControllers(); 
 
 
+using (var scope = app.Services.CreateScope())
+{
+    var services = scope.ServiceProvider;
+    try
+    {
+        var context = services.GetRequiredService<mdxEcommerce.Data.ApplicationDbContext>();
+        
+        // Crea la base de datos y las tablas en PostgreSQL si no existen
+        context.Database.EnsureCreated(); 
 
+        // Si la tabla de productos está vacía, agregamos los iniciales
+        if (!context.Products.Any()) 
+        {
+            context.Products.AddRange(
+                new mdxEcommerce.Models.Products 
+                { 
+                    Name = "Remera MDX", 
+                    Price = 25.99m, 
+                    ImageUrl = "https://unsplash.com", 
+                    StockQuantity = 50 
+                },
+                new mdxEcommerce.Models.Products 
+                { 
+                    Name = "Zapatillas Running", 
+                    Price = 89.99m, 
+                    ImageUrl = "https://unsplash.com", 
+                    StockQuantity = 20 
+                },
+                new mdxEcommerce.Models.Products 
+                { 
+                    Name = "Gorra Trucker", 
+                    Price = 15.50m, 
+                    ImageUrl = "https://unsplash.com", 
+                    StockQuantity = 100 
+                }
+            );
+            
+            context.SaveChanges();
+            Console.WriteLine("--> Productos iniciales insertados con éxito en PostgreSQL.");
+        }
+    }
+    catch (Exception ex)
+    {
+        Console.WriteLine($"--> Error al insertar productos por defecto: {ex.Message}");
+    }
+}
 app.Run();

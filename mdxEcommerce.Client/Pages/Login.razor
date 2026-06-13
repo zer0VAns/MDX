@@ -1,0 +1,105 @@
+@page "/login"
+@rendermode @(new InteractiveWebAssemblyRenderMode(prerender: false))
+@using mdxEcommerce.Client.Models
+@using mdxEcommerce.Client.Services
+@inject AuthService AuthService
+@inject NavigationManager Nav
+
+<PageTitle>Login — MDX</PageTitle>
+
+<div class="auth-page">
+    <div class="auth-bg-overlay"></div>
+
+    <div class="auth-card">
+        <div class="auth-header">
+            <a href="/" class="auth-brand">MDX</a>
+            <p class="auth-eyebrow">Welcome back</p>
+            <h1 class="auth-title">Sign In</h1>
+        </div>
+
+        <div class="auth-form">
+            @if (!string.IsNullOrEmpty(errorMessage))
+            {
+                <div class="auth-error">@errorMessage</div>
+            }
+
+            <div class="field">
+                <label class="field-label">Email</label>
+                <input class="field-input"
+                       type="email"
+                       placeholder="your@email.com"
+                       @bind="email"
+                       @bind:event="oninput"
+                       disabled="@isLoading" />
+            </div>
+
+            <div class="field">
+                <label class="field-label">Password</label>
+                <input class="field-input"
+                       type="password"
+                       placeholder="••••••••"
+                       @bind="password"
+                       @bind:event="oninput"
+                       @onkeydown="OnKeyDown"
+                       disabled="@isLoading" />
+            </div>
+
+            <button class="btn-auth @(isLoading ? "btn-auth--loading" : "")"
+                    @onclick="HandleLogin"
+                    disabled="@isLoading">
+                @if (isLoading)
+                {
+                    <span class="btn-spinner"></span>
+                }
+                else
+                {
+                    <span>Sign In</span>
+                }
+            </button>
+        </div>
+
+        <div class="auth-footer">
+            <span>Don't have an account?</span>
+            <a href="/register" class="auth-link">Create one</a>
+        </div>
+    </div>
+</div>
+
+@code {
+    private string email        = string.Empty;
+    private string password     = string.Empty;
+    private string? errorMessage;
+    private bool isLoading      = false;
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (await AuthService.IsAuthenticatedAsync())
+            Nav.NavigateTo("/");
+    }
+
+    private async Task HandleLogin()
+    {
+        if (string.IsNullOrWhiteSpace(email) || string.IsNullOrWhiteSpace(password))
+        {
+            errorMessage = "Por favor completá todos los campos.";
+            return;
+        }
+
+        isLoading    = true;
+        errorMessage = null;
+
+        var (success, error) = await AuthService.LoginAsync(new LoginRequest(email, password));
+
+        if (success)
+            Nav.NavigateTo("/");
+        else
+            errorMessage = error;
+
+        isLoading = false;
+    }
+
+    private async Task OnKeyDown(KeyboardEventArgs e)
+    {
+        if (e.Key == "Enter") await HandleLogin();
+    }
+}

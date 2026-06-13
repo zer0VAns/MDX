@@ -52,3 +52,11 @@ build_metadata.AdditionalFiles.CssScope = b-d6nai7dxy0
 [C:/Users/jamaica/Desktop/mdx-ecommerce/mdxEcommerce/mdxEcommerce.Client/Pages/Home.razor]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcSG9tZS5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = b-lpjam9d8ut
+
+[C:/Users/jamaica/Desktop/mdx-ecommerce/mdxEcommerce/mdxEcommerce.Client/Pages/Login.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcTG9naW4ucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = b-mggpdsdojv
+
+[C:/Users/jamaica/Desktop/mdx-ecommerce/mdxEcommerce/mdxEcommerce.Client/Pages/Register.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcUmVnaXN0ZXIucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = b-m63izszz3p

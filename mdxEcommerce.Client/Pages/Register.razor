@@ -1,0 +1,220 @@
+@page "/register"
+@rendermode @(new InteractiveWebAssemblyRenderMode(prerender: false))
+@using mdxEcommerce.Client.Models
+@using mdxEcommerce.Client.Services
+@inject AuthService AuthService
+@inject NavigationManager Nav
+
+<PageTitle>Register — MDX</PageTitle>
+
+<div class="auth-page">
+    <div class="auth-bg-overlay"></div>
+
+    <div class="auth-card">
+        <div class="auth-header">
+            <a href="/" class="auth-brand">MDX</a>
+            <p class="auth-eyebrow">Join us</p>
+            <h1 class="auth-title">Create Account</h1>
+        </div>
+
+        <div class="auth-form">
+            @if (!string.IsNullOrEmpty(errorMessage))
+            {
+                <div class="auth-error">@errorMessage</div>
+            }
+
+            <div class="field-row">
+                <div class="field">
+                    <label class="field-label">First Name</label>
+                    <input class="field-input"
+                           type="text"
+                           placeholder="John"
+                           @bind="firstName"
+                           @bind:event="oninput"
+                           disabled="@isLoading" />
+                </div>
+                <div class="field">
+                    <label class="field-label">Last Name</label>
+                    <input class="field-input"
+                           type="text"
+                           placeholder="Doe"
+                           @bind="lastName"
+                           @bind:event="oninput"
+                           disabled="@isLoading" />
+                </div>
+            </div>
+
+            <div class="field">
+                <label class="field-label">Username</label>
+                <input class="field-input"
+                       type="text"
+                       placeholder="johndoe"
+                       @bind="username"
+                       @bind:event="oninput"
+                       disabled="@isLoading" />
+            </div>
+
+            <div class="field">
+                <label class="field-label">Email</label>
+                <input class="field-input"
+                       type="email"
+                       placeholder="your@email.com"
+                       @bind="email"
+                       @bind:event="oninput"
+                       disabled="@isLoading" />
+            </div>
+
+            <div class="field">
+                <label class="field-label">Password</label>
+                <input class="field-input"
+                       type="password"
+                       placeholder="••••••••"
+                       @bind="password"
+                       @bind:event="oninput"
+                       disabled="@isLoading" />
+                @if (!string.IsNullOrEmpty(password))
+                {
+                    <div class="password-strength">
+                        <div class="strength-bar">
+                            <div class="strength-fill strength-fill--@GetStrengthClass()" style="width: @(GetStrengthPercent())%"></div>
+                        </div>
+                        <span class="strength-label">@GetStrengthLabel()</span>
+                    </div>
+                }
+            </div>
+
+            <div class="field">
+                <label class="field-label">Confirm Password</label>
+                <input class="field-input @(PasswordMismatch() ? "field-input--error" : "")"
+                       type="password"
+                       placeholder="••••••••"
+                       @bind="confirmPassword"
+                       @bind:event="oninput"
+                       @onkeydown="OnKeyDown"
+                       disabled="@isLoading" />
+            </div>
+
+            <button class="btn-auth @(isLoading ? "btn-auth--loading" : "")"
+                    @onclick="HandleRegister"
+                    disabled="@isLoading">
+                @if (isLoading)
+                {
+                    <span class="btn-spinner"></span>
+                }
+                else
+                {
+                    <span>Create Account</span>
+                }
+            </button>
+        </div>
+
+        <div class="auth-footer">
+            <span>Already have an account?</span>
+            <a href="/login" class="auth-link">Sign in</a>
+        </div>
+    </div>
+</div>
+
+@code {
+    private string firstName      = string.Empty;
+    private string lastName       = string.Empty;
+    private string username       = string.Empty;
+    private string email          = string.Empty;
+    private string password       = string.Empty;
+    private string confirmPassword = string.Empty;
+    private string? errorMessage;
+    private bool isLoading        = false;
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (await AuthService.IsAuthenticatedAsync())
+            Nav.NavigateTo("/");
+    }
+
+    private async Task HandleRegister()
+    {
+        errorMessage = null;
+
+        if (string.IsNullOrWhiteSpace(username) || string.IsNullOrWhiteSpace(email) || string.IsNullOrWhiteSpace(password))
+        {
+            errorMessage = "Username, email y password son requeridos.";
+            return;
+        }
+
+        if (password != confirmPassword)
+        {
+            errorMessage = "Las contraseñas no coinciden.";
+            return;
+        }
+
+        if (password.Length < 8)
+        {
+            errorMessage = "La contraseña debe tener al menos 8 caracteres.";
+            return;
+        }
+
+        isLoading = true;
+
+        var request = new RegisterRequest(
+            email,
+            username,
+            password,
+            string.IsNullOrWhiteSpace(firstName) ? null : firstName,
+            string.IsNullOrWhiteSpace(lastName)  ? null : lastName
+        );
+
+        var (success, error) = await AuthService.RegisterAsync(request);
+
+        if (success)
+            Nav.NavigateTo("/");
+        else
+            errorMessage = error;
+
+        isLoading = false;
+    }
+
+    private async Task OnKeyDown(KeyboardEventArgs e)
+    {
+        if (e.Key == "Enter") await HandleRegister();
+    }
+
+    private bool PasswordMismatch()
+        => !string.IsNullOrEmpty(confirmPassword) && password != confirmPassword;
+
+    // ── Password strength ─────────────────────────────────────────────────
+    private int GetStrengthScore()
+    {
+        int score = 0;
+        if (password.Length >= 8)  score++;
+        if (password.Length >= 12) score++;
+        if (password.Any(char.IsUpper))  score++;
+        if (password.Any(char.IsDigit))  score++;
+        if (password.Any(c => !char.IsLetterOrDigit(c))) score++;
+        return score;
+    }
+
+    private int GetStrengthPercent() => GetStrengthScore() switch
+    {
+        0 or 1 => 20,
+        2      => 40,
+        3      => 60,
+        4      => 80,
+        _      => 100
+    };
+
+    private string GetStrengthClass() => GetStrengthScore() switch
+    {
+        0 or 1 => "weak",
+        2      => "fair",
+        3      => "good",
+        _      => "strong"
+    };
+
+    private string GetStrengthLabel() => GetStrengthScore() switch
+    {
+        0 or 1 => "Weak",
+        2      => "Fair",
+        3      => "Good",
+        _      => "Strong"
+    };
+}

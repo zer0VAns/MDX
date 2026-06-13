@@ -68,8 +68,8 @@ using (var scope = app.Services.CreateScope())
     {
         var context = services.GetRequiredService<mdxEcommerce.Data.ApplicationDbContext>();
         
-        // Crea la base de datos y las tablas en PostgreSQL si no existen
-        context.Database.EnsureCreated(); 
+        // Ejecuta todas las migraciones pendientes y crea las tablas reales
+        context.Database.Migrate(); 
 
         // Si la tabla de productos está vacía, agregamos los iniciales
         if (!context.Products.Any()) 

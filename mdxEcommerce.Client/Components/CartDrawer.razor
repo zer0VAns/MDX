@@ -3,6 +3,7 @@
 @inject CartService CartService
 @implements IDisposable
 @rendermode @(new InteractiveWebAssemblyRenderMode(prerender: false))
+@inject Microsoft.JSInterop.IJSRuntime JS
 
 @if (CartService.IsOpen)
 {
@@ -69,7 +70,7 @@
                 <span class="drawer-total-label">Total</span>
                 <span class="drawer-total-value">@CartService.TotalPrice.ToString("C")</span>
             </div>
-            <a href="/checkout" class="btn-checkout" @onclick="CartService.CloseCart">Checkout</a>
+            <button class="btn-checkout" @onclick="HandleCheckout">Checkout</button>
             <button class="btn-clear" @onclick="Clear">Clear Cart</button>
         </div>
     }
@@ -89,6 +90,13 @@
     {
         InvokeAsync(StateHasChanged);
     }
+
+    private async Task HandleCheckout()
+{
+    CartService.CloseCart();
+    await JS.InvokeVoidAsync("alert", "¡Compra exitosa!");
+    await CartService.ClearAsync();
+}
 
     private async Task Increment(CartItem item) => await CartService.SetQuantityAsync(item.Id, item.Quantity + 1);
     private async Task Decrement(CartItem item) => await CartService.SetQuantityAsync(item.Id, item.Quantity - 1);

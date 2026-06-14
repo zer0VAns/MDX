@@ -1079,10 +1079,10 @@ C:\Users\jamaica\Desktop\mdx-ecommerce\mdxEcommerce\mdxEcommerce.Client\obj\Debu
 C:\Users\jamaica\Desktop\mdx-ecommerce\mdxEcommerce\mdxEcommerce.Client\obj\Debug\net10.0\scopedcss\Components\CartDrawer.razor.rz.scp.css
 C:\Users\jamaica\Desktop\mdx-ecommerce\mdxEcommerce\mdxEcommerce.Client\obj\Debug\net10.0\compressed\9eokw3a1oe-{0}-78k9y9mzpi-78k9y9mzpi.gz
 C:\Users\jamaica\Desktop\mdx-ecommerce\mdxEcommerce\mdxEcommerce.Client\obj\Debug\net10.0\compressed\lx2vgeozul-{0}-78k9y9mzpi-78k9y9mzpi.gz
-C:\Users\jamaica\Desktop\mdx-ecommerce\mdxEcommerce\mdxEcommerce.Client\bin\Debug\net10.0\wwwroot\_framework\mdxEcommerce.Client.qvto2glvwn.wasm
-C:\Users\jamaica\Desktop\mdx-ecommerce\mdxEcommerce\mdxEcommerce.Client\bin\Debug\net10.0\wwwroot\_framework\mdxEcommerce.Client.ekxn52mci7.pdb
-C:\Users\jamaica\Desktop\mdx-ecommerce\mdxEcommerce\mdxEcommerce.Client\bin\Debug\net10.0\wwwroot\_framework\mdxEcommerce.Client.qvto2glvwn.wasm.gz
-C:\Users\jamaica\Desktop\mdx-ecommerce\mdxEcommerce\mdxEcommerce.Client\bin\Debug\net10.0\wwwroot\_framework\mdxEcommerce.Client.ekxn52mci7.pdb.gz
-C:\Users\jamaica\Desktop\mdx-ecommerce\mdxEcommerce\mdxEcommerce.Client\obj\Debug\net10.0\compressed\vqe5tfduz3-{0}-qvto2glvwn-qvto2glvwn.gz
-C:\Users\jamaica\Desktop\mdx-ecommerce\mdxEcommerce\mdxEcommerce.Client\obj\Debug\net10.0\compressed\ieftdlgf9f-{0}-ekxn52mci7-ekxn52mci7.gz
-C:\Users\jamaica\Desktop\mdx-ecommerce\mdxEcommerce\mdxEcommerce.Client\obj\Debug\net10.0\compressed\7b6cgwjy7a-{0}-wb0m6vuu4n-wb0m6vuu4n.gz
+C:\Users\jamaica\Desktop\mdx-ecommerce\mdxEcommerce\mdxEcommerce.Client\bin\Debug\net10.0\wwwroot\_framework\mdxEcommerce.Client.3y2da7aopw.wasm
+C:\Users\jamaica\Desktop\mdx-ecommerce\mdxEcommerce\mdxEcommerce.Client\bin\Debug\net10.0\wwwroot\_framework\mdxEcommerce.Client.8rpob40ns7.pdb
+C:\Users\jamaica\Desktop\mdx-ecommerce\mdxEcommerce\mdxEcommerce.Client\bin\Debug\net10.0\wwwroot\_framework\mdxEcommerce.Client.3y2da7aopw.wasm.gz
+C:\Users\jamaica\Desktop\mdx-ecommerce\mdxEcommerce\mdxEcommerce.Client\bin\Debug\net10.0\wwwroot\_framework\mdxEcommerce.Client.8rpob40ns7.pdb.gz
+C:\Users\jamaica\Desktop\mdx-ecommerce\mdxEcommerce\mdxEcommerce.Client\obj\Debug\net10.0\compressed\vqe5tfduz3-{0}-3y2da7aopw-3y2da7aopw.gz
+C:\Users\jamaica\Desktop\mdx-ecommerce\mdxEcommerce\mdxEcommerce.Client\obj\Debug\net10.0\compressed\ieftdlgf9f-{0}-8rpob40ns7-8rpob40ns7.gz
+C:\Users\jamaica\Desktop\mdx-ecommerce\mdxEcommerce\mdxEcommerce.Client\obj\Debug\net10.0\compressed\7b6cgwjy7a-{0}-my8buho4kh-my8buho4kh.gz

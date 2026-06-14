@@ -5,7 +5,7 @@ var e=!1;const t=async()=>WebAssembly.validate(new Uint8Array([0,97,115,109,1,0,
   "mainAssemblyName": "mdxEcommerce.Client",
   "applicationEnvironment": "Development",
   "resources": {
-    "hash": "sha256-ajQlawGhV1bMhgIVXTisubu6PjIiQuQn5woCBoI0aC4=",
+    "hash": "sha256-2eDeDgCLAtrF26LWZVsf7SJBQBn3yYncB31BnxMdM00=",
     "jsModuleNative": [
       {
         "name": "dotnet.native.rjbmzc4jpg.js"
@@ -1242,16 +1242,16 @@ var e=!1;const t=async()=>WebAssembly.validate(new Uint8Array([0,97,115,109,1,0,
       },
       {
         "virtualPath": "mdxEcommerce.Client.wasm",
-        "name": "mdxEcommerce.Client.qvto2glvwn.wasm",
-        "hash": "sha256-usAOxkECIzryQA9cB7vleMCx6fjAGYzVMeU1XlbzXoY=",
+        "name": "mdxEcommerce.Client.3y2da7aopw.wasm",
+        "hash": "sha256-1UmGOCQd3tbd2LnAxFTNFa7TzGZQBkGgQ5vKBj86VG4=",
         "cache": "force-cache"
       }
     ],
     "pdb": [
       {
         "virtualPath": "mdxEcommerce.Client.pdb",
-        "name": "mdxEcommerce.Client.ekxn52mci7.pdb",
-        "hash": "sha256-rtZaDZ191RQ6797NT/ZzAga6xeSOu/qEI6H7wibODkw=",
+        "name": "mdxEcommerce.Client.8rpob40ns7.pdb",
+        "hash": "sha256-nCxKzgUTgWCwHvOJjMqgSBchGefJxa/zA3fm0JJndiQ=",
         "cache": "force-cache"
       }
     ],

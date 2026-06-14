@@ -7,7 +7,6 @@ using System.Text;
 using mdxEcommerce.Data;
 using mdxEcommerce.Models;
 using mdxEcommerce.Services;
-
 var builder = WebApplication.CreateBuilder(args);
 
 var connectionString = Environment.GetEnvironmentVariable("DATABASE_URL")
@@ -48,6 +47,8 @@ builder.Services.AddScoped<AuthService>();
 builder.Services.AddControllers();
 builder.Services.AddRazorComponents()
     .AddInteractiveWebAssemblyComponents();
+
+
 
 if (builder.Environment.IsDevelopment())
 {

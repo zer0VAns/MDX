@@ -201,4 +201,4 @@ C:\Users\jamaica\Desktop\mdx-ecommerce\mdxEcommerce\mdxEcommerce\bin\Debug\net10
 C:\Users\jamaica\Desktop\mdx-ecommerce\mdxEcommerce\mdxEcommerce\bin\Debug\net10.0\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
 C:\Users\jamaica\Desktop\mdx-ecommerce\mdxEcommerce\mdxEcommerce\bin\Debug\net10.0\Microsoft.IdentityModel.Tokens.dll
 C:\Users\jamaica\Desktop\mdx-ecommerce\mdxEcommerce\mdxEcommerce\bin\Debug\net10.0\System.IdentityModel.Tokens.Jwt.dll
-C:\Users\jamaica\Desktop\mdx-ecommerce\mdxEcommerce\mdxEcommerce\obj\Debug\net10.0\compressed\0r1j53j9lw-{0}-mvxybn9fg2-mvxybn9fg2.gz
+C:\Users\jamaica\Desktop\mdx-ecommerce\mdxEcommerce\mdxEcommerce\obj\Debug\net10.0\compressed\0r1j53j9lw-{0}-drevpvyvz4-drevpvyvz4.gz

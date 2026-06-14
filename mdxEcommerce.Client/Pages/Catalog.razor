@@ -1,7 +1,9 @@
 @page "/catalog"
-@rendermode InteractiveWebAssembly
 @using mdxEcommerce.Client.Models
+@using mdxEcommerce.Client.Services
 @inject HttpClient Http
+@inject CartService CartService
+@rendermode @(new InteractiveWebAssemblyRenderMode(prerender: false))
 
 <PageTitle>Catalog — MDX</PageTitle>
 
@@ -17,8 +19,6 @@
 
 <!-- Catalog Body -->
 <section class="catalog-section">
-
-    <!-- Toolbar: count + sort -->
     <div class="catalog-toolbar">
         <span class="catalog-count">
             @if (products != null)
@@ -37,7 +37,6 @@
         </div>
     </div>
 
-    <!-- Grid -->
     @if (products == null)
     {
         <div class="catalog-loading">
@@ -90,12 +89,12 @@
     {
         try
         {
-            products = await Http.GetFromJsonAsync<List<ProductDto>>(requestUri: "api/products");
+            products = await Http.GetFromJsonAsync<List<ProductDto>>("api/products");
             ApplySort();
         }
         catch (Exception ex)
         {
-            Console.WriteLine(value: $"Error fetching data: {ex.Message}");
+            Console.WriteLine($"Error fetching data: {ex.Message}");
         }
     }
 
@@ -108,7 +107,6 @@
     private void ApplySort()
     {
         if (products == null) return;
-
         filteredProducts = sortMode switch
         {
             "price-asc"  => products.OrderBy(p => p.Price).ToList(),
@@ -118,8 +116,9 @@
         };
     }
 
-    private void AddToCart(ProductDto product)
+    private async Task AddToCart(ProductDto product)
     {
-        Console.WriteLine($"Added to cart: {product.Name}");
+        await CartService.AddAsync(product);
+        CartService.OpenCart();
     }
 }

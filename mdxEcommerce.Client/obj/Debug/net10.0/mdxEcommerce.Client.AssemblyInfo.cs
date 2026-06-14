@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("mdxEcommerce.Client")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+ac1ae1795ef3e8979dccb9eca5b2bfe151995ede")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+ef453c5b1cafebdcf12fc83fffb30843d6d52670")]
 [assembly: System.Reflection.AssemblyProductAttribute("mdxEcommerce.Client")]
 [assembly: System.Reflection.AssemblyTitleAttribute("mdxEcommerce.Client")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
